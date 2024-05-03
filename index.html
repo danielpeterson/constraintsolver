@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Constraint solver</title>
+    <style>
+        body { margin: 0; font: 14px sans-serif; }
+        canvas { display: block; }
+        .top-container { position: absolute; top: 0; left: 0; padding-left: 20px; pointer-events: none; }
+        .info { color:grey; }
+    </style>
+    <script type="module" src="./app.js" defer></script>
+</head>
+<body>
+    <div class="top-container">
+        <h3>Instructions</h3>
+        <div>
+            Drag points with the mouse to see how the model reacts.<br>
+            P5 is underconstrained using a perpendicular distance constraint to the line P2-P3.<br>
+        </div><br>
+        <div class="info">
+            Iterations: <span id="iterations"></span><br>
+            Time: <span id="time"></span> ms<br>
+            MSE: <span id="error"></span> px<br>
+        </div>
+    </div>
+    <canvas id="canvas" width="800" height="600"></canvas>
+</body>
+</html>
