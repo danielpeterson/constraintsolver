@@ -5,6 +5,9 @@ This is an example of a simplistic CAD sketch constraint solver. It is only a pr
 You can test it online here:
 https://danielpeterson.github.io/constraintsolver
 
+## Description
+The solver uses linear approximations of constraints and the Gauss-Seidel method. This has slower convergence than more advanced methods, but it is simple to implement.
+
 ## License
 
 Modified MIT license without any need for attribution.
