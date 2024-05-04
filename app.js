@@ -6,10 +6,9 @@ const ctx = canvas.getContext('2d');
 
 
 // //////////////////////////////////////////
-// Model & View
+// Model
 // //////////////////////////////////////////
 
-// Model "data"
 let points = [];
 let lines = [];
 let arcs = [];
@@ -17,10 +16,12 @@ let constraints = [];
 
 
 // //////////////////////////////////////////
-// Code entry point
+// Controller
 // //////////////////////////////////////////
 
 window.onload = () => {
+    // Code entry point
+
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
@@ -68,11 +69,6 @@ window.onload = () => {
     drawAll();
 }
 
-
-// //////////////////////////////////////////
-// Controller
-// //////////////////////////////////////////
-
 function stepSolver() {
     let MSE = Number.MAX_VALUE;
     let iterations = 0;
@@ -89,7 +85,11 @@ function stepSolver() {
     document.getElementById('time').textContent = executionTime.toFixed(2);
 }
 
-// Draw view
+
+// //////////////////////////////////////////
+// View
+// //////////////////////////////////////////
+
 function drawAll() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.font = "12px sans-serif";
@@ -112,11 +112,6 @@ function drawAll() {
     constraints.forEach(constraint => constraint.draw(ctx));
 }
 
-
-// //////////////////////////////////////////
-// UI
-// //////////////////////////////////////////
-
 let mouseConstraint = null;
 
 canvas.addEventListener('mousedown', (event) => {
@@ -124,7 +119,8 @@ canvas.addEventListener('mousedown', (event) => {
     const mouseY = event.clientY - canvas.getBoundingClientRect().top;
     let selectedPoint = points.find(point => Math.sqrt((point.position.x - mouseX) ** 2 + (point.position.y - mouseY) ** 2) <= 5);
 
-    if (selectedPoint != null) {
+    if (selectedPoint != null && mouseConstraint == null) {
+        
         constraints.push(mouseConstraint = new Constraint.FixedConstraint(selectedPoint, mouseX, mouseY));
     }
 });
