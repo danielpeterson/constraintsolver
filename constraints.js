@@ -139,14 +139,14 @@ export class AngleConstraint {
         const ABcrossCD = AB.cross(CD);
 
         const angle = Math.atan2(ABcrossCD, ABdotCD);
-        const deltaAngle = Math.min(Math.max(angle - this.targetAngle, -Math.PI / 4), Math.PI / 4);
+        const deltaAngle = Math.min(Math.max(angle - this.targetAngle, -Math.PI / 8), Math.PI / 8);
 
-        const correctionVectorAB = new Vector2(deltaAngle * AB.y, -deltaAngle * AB.x).multiplyScalar(0.25);
-        const correctionVectorCD = new Vector2(deltaAngle * CD.y, -deltaAngle * CD.x).multiplyScalar(0.25);
+        const correctionVectorAB = new Vector2(deltaAngle * AB.y, -deltaAngle * AB.x);
+        const correctionVectorCD = new Vector2(deltaAngle * CD.y, -deltaAngle * CD.x);
 
         this.point1.position.add(correctionVectorAB);
-        this.point2.position.sub(correctionVectorAB);
-        this.point3.position.sub(correctionVectorCD);
+        //this.point2.position.sub(correctionVectorAB);
+        //this.point3.position.sub(correctionVectorCD);
         this.point4.position.add(correctionVectorCD);
 
         return (angle - this.targetAngle) ** 2;
