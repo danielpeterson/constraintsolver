@@ -37,12 +37,19 @@ window.onload = () => {
         new Model.Point(500, 100),
         new Model.Point(100, 400),
         new Model.Point(600, 100),
+
+        // Corner
+        new Model.Point(600, 400),
+        new Model.Point(650, 500),
+        new Model.Point(200, 550),
     );
 
     lines.push(
         new Model.Line(points[0], points[1]),
         new Model.Line(points[2], points[3]),
         new Model.Line(points[4], points[5]),
+        new Model.Line(points[9], points[10]),
+        new Model.Line(points[10], points[11]),
     );
 
     arcs.push(
@@ -52,13 +59,18 @@ window.onload = () => {
     constraints.push(
         new Constraint.DistanceConstraint(points[0], points[1], 200),
         new Constraint.DistanceConstraint(points[2], points[3], 250),
-        new Constraint.DistanceConstraint(points[4], points[5], 150),
+        //new Constraint.DistanceConstraint(points[4], points[5], 150),
         new Constraint.CoincidentConstraint(points[1], points[2]),
         new Constraint.CoincidentConstraint(points[3], points[4]),
         new Constraint.CoincidentConstraint(points[5], points[6]),
+        new Constraint.CoincidentConstraint(points[7], points[9]),
+        new Constraint.CoincidentConstraint(points[11], points[0]),
+        new Constraint.VerticalConstraint(points[9], points[10]),
         new Constraint.HorizontalConstraint(points[2], points[3]),
+        new Constraint.HorizontalConstraint(points[10], points[11]),
         new Constraint.FixedConstraint(points[1], 230, 330),
         new Constraint.AngleConstraint(points[0], points[1], points[2], points[3], Math.PI / 4),
+        new Constraint.AngleConstraint(points[2], points[3], points[4], points[5], -Math.PI / 4),
         new Constraint.LineDistanceConstraint(points[5], points[2], points[3], 100),
         new Constraint.ArcConstraint(points[6], points[7], points[8], 50),
         new Constraint.TangentConstraint(points[4], points[5], points[6], points[8]),
@@ -73,7 +85,7 @@ function stepSolver() {
     let MSE = Number.MAX_VALUE;
     let iterations = 0;
     const startTime = performance.now();
-    for (; iterations < 10000 && MSE > 0.00001; iterations++) {
+    for (; iterations < 10000 && MSE > 0.0000000001; iterations++) {
         
         // Apply mouse constraint
         if (mouseConstraint != null) {

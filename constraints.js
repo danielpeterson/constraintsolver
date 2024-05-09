@@ -57,6 +57,26 @@ export class HorizontalConstraint {
     }
 }
 
+export class VerticalConstraint {
+    constructor(point1, point2) {
+        this.point1 = point1;
+        this.point2 = point2;
+    }
+    apply() {
+        // Calculate the average x location of the two endpoints.
+        // Move the x coordinate of each endpoint to the average.
+        const diff = new Vector2(this.point2.position.x - this.point1.position.x, 0);
+        const dx = diff.x * 0.5;
+        this.point1.position.x += dx;
+        this.point2.position.x -= dx;
+        return diff.x ** 2;
+    }
+    draw(ctx) {
+        const p = new Vector2().addVectors(this.point1.position, this.point2.position).multiplyScalar(0.5);
+        ctx.fillText("V", p.x - 10, p.y);
+    }
+}
+
 export class FixedConstraint {
     constructor(point, targetX, targetY) {
         this.point = point;
