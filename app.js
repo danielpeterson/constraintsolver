@@ -74,6 +74,12 @@ function stepSolver() {
     let iterations = 0;
     const startTime = performance.now();
     for (; iterations < 10000 && MSE > 0.00001; iterations++) {
+        
+        // Apply mouse constraint
+        if (mouseConstraint != null) {
+            mouseConstraint.apply();
+        }
+
         MSE = Math.sqrt(constraints.reduce((acc, constraint) => acc + constraint.apply(), 0) / constraints.length)
     };
 
@@ -120,8 +126,7 @@ canvas.addEventListener('mousedown', (event) => {
     let selectedPoint = points.find(point => Math.sqrt((point.position.x - mouseX) ** 2 + (point.position.y - mouseY) ** 2) <= 5);
 
     if (selectedPoint != null && mouseConstraint == null) {
-        
-        constraints.push(mouseConstraint = new Constraint.FixedConstraint(selectedPoint, mouseX, mouseY));
+        mouseConstraint = new Constraint.FixedConstraint(selectedPoint, mouseX, mouseY)
     }
 });
 
@@ -140,7 +145,6 @@ canvas.addEventListener('mousemove', (event) => {
 
 canvas.addEventListener('mouseup', () => {
     if (mouseConstraint != null) {
-        constraints = constraints.filter(constraint => constraint !== mouseConstraint);
         mouseConstraint = null;
     }
 
